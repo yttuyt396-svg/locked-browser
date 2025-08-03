@@ -1,0 +1,34 @@
+name: Build LockedBrowser
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Install WebView2 NuGet
+        run: dotnet add src/ package Microsoft.Web.WebView2
+
+      - name: Build project
+        run: |
+          dotnet publish src/LockedBrowser.csproj -c Release -r win‑x64 --self-contained false -o artifacts
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: LockedBrowser
+          path: artifacts/

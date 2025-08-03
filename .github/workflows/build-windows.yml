@@ -1,27 +1,28 @@
-name: build
+name: Build Windows
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Install WebView2 NuGet
-        run: dotnet add src/LockedBrowser-GitHubTemplate/LockedBrowser.csproj package Microsoft.Web.WebView2
+      - name: Restore NuGet packages
+        run: dotnet restore LockedBrowser-GitHubTemplate/src/LockedBrowser.csproj
 
-      - name: Build project
-        run: |
-          dotnet publish src/LockedBrowser-GitHubTemplate/LockedBrowser.csproj -c Release -r win-x64 --self-contained false -o artifacts
+      - name: Install WebView2 package
+        run: dotnet add LockedBrowser-GitHubTemplate/src/LockedBrowser.csproj package Microsoft.Web.WebView2
+
+      - name: Build Project
+        run: dotnet publish LockedBrowser-GitHubTemplate/src/LockedBrowser.csproj -c Release -r win-x64 --self-contained false -o artifacts
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

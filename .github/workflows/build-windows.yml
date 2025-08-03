@@ -22,7 +22,7 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install WebView2 NuGet
-        run: dotnet add src/ package Microsoft.Web.WebView2
+        run: dotnet add src/LockedBrowser.csproj package Microsoft.Web.WebView2
 
       - name: Build project
         run: |

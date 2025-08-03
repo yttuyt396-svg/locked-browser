@@ -1,3 +1,4 @@
+
 name: Build LockedBrowser
 
 on:
@@ -28,4 +29,7 @@ jobs:
           dotnet publish src/LockedBrowser.csproj -c Release -r win‑x64 --self-contained false -o artifacts
 
       - name: Upload artifact
-        us
+        uses: actions/upload-artifact@v4
+        with:
+          name: LockedBrowser
+          path: artifacts/

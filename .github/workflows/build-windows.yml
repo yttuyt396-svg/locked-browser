@@ -28,7 +28,7 @@ jobs:
           dotnet publish src/LockedBrowser.csproj -c Release -r win‑x64 --self-contained false -o artifacts
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # ✅ هنا التحديث المهم
         with:
           name: LockedBrowser
           path: artifacts/
